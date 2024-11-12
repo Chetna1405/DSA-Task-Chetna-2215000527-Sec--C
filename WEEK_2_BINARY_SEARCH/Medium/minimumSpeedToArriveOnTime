@@ -1,0 +1,30 @@
+class Solution {
+    public int minSpeedOnTime(int[] dist, double hour) {
+        if(hour<=dist.length-1) return -1;
+        int low = 0 ;
+        int high = Integer.MAX_VALUE ;
+        int ans = -1 ;
+        while(low <= high){
+            int mid = (low + high) / 2 ;
+            // double time = calculateTime(mid , dist);
+            if(calculateTime(mid , dist , hour)){
+                ans = mid; 
+                high = mid - 1;
+            }else{
+                low = mid + 1 ;
+            }
+        }
+        return ans ;
+    }
+
+    public boolean calculateTime(double mid , int[] dist, double hour){
+        double time = 0 ;
+        for(int i = 0 ; i < dist.length-1 ; i++){
+            time += Math.ceil(dist[i] / mid);
+        }
+       
+        time += (dist[dist.length-1] / mid);
+            
+        return (time <= hour) ;
+    }
+}
